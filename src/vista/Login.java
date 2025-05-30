@@ -11,6 +11,8 @@ import java.awt.Image;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -61,9 +63,7 @@ private String usuarioElegido;
         setVisible(false);
         new InterfazCajero(null, true, usuarioElegido).setVisible(true); // o false si no quieres que sea modal
         // Cuando cierras inventario puedes volver a mostrar login si quieres
-        setVisible(true);
-
-      
+        setVisible(true);      
     }
     public void AbrirInterfazGerente(){
        // Cerrar ventana login
@@ -72,7 +72,11 @@ private String usuarioElegido;
     public void AbrirInterfazRecepcionista(){
        // Cerrar ventana login
         setVisible(false);
-        new InterfazPed(null, true).setVisible(true); // o false si no quieres que sea modal
+        try {
+            new InterfazPed(null, true).setVisible(true); // o false si no quieres que sea modal
+        } catch (Exception ex) {
+        Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+    }
         // Cuando cierras inventario puedes volver a mostrar login si quieres
         setVisible(true);    
     }
@@ -205,7 +209,14 @@ private String usuarioElegido;
                     case "Almacenista": AbrirInterfazAlmacenista(rol); break;
                     case "Cajero": AbrirInterfazCajero(); break;
                     case "Gerente":  AbrirInterfazGerente(); break;
-                    case "Recepcionista": AbrirInterfazRecepcionista(); break;
+                    case "Recepcionista": {
+                        try {
+                            AbrirInterfazRecepcionista();
+                        } catch (Exception ex) {
+                            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    } break;
+
                 }
             }
         }

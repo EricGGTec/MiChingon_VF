@@ -138,14 +138,22 @@ public class InterfazPed extends javax.swing.JDialog {
         cargarProductoCB();
         pedidos = cPedido.findPedidoEntities();
         cantidadSP.setModel(Msp);
-        cargarPedidos();
+        try{cargarPedidos();}
+        catch(Exception e){}
         calendarioSelec.setEnabled(false);
         Bcf2.setEnabled(false);
         Bcancelar.setEnabled(false);
-        cargarCB();
-        cargarCBubi();
+        try{
+            cargarCB();
+        }catch(Exception e){}
+        try {
+            cargarCBubi();
+        }catch(Exception e){}
+        try{
         productosInvt();
-
+        }catch(Exception e){}
+        try{cargarPedidos();
+        }catch(Exception e){}
     }
 
     private void cargarProductoCB() {
@@ -160,6 +168,7 @@ public class InterfazPed extends javax.swing.JDialog {
     }
 
     private void productosInvt() {
+        try{
         productosInv.clear();
         productos = cProducto.findProductoEntities();
         for (Producto p : productos) {//agregar solo los que estan en inven
@@ -172,7 +181,7 @@ public class InterfazPed extends javax.swing.JDialog {
         }
         //inventario = cInventario.findInventarioEntities();
         //for(Inventario inv:inventario)
-
+    }catch(Exception e){}
     }
 
     public void cargarPedidos() throws Exception {
@@ -353,13 +362,14 @@ public class InterfazPed extends javax.swing.JDialog {
     }
 
     private Inventario buscaInventario(Producto p) {
-        inventario = cInventario.findInventarioEntities();
+        try{inventario = cInventario.findInventarioEntities();
         for (Inventario in : inventario) {
             System.out.println("buscando en inventario, reg " + in.getIdInventario());
             if (in.getIdProducto().getIdProducto() == p.getIdProducto()) {
                 return in;
             }
         }
+        }catch(Exception e){}
         return null;
     }
 
