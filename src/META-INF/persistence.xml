@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+  <persistence-unit name="MiChingonPU" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>modelo.Proveedor</class>
+    <class>modelo.Cliente</class>
+    <class>modelo.Catalogo</class>
+    <class>modelo.Inventario</class>
+    <class>modelo.Pedido</class>
+    <class>modelo.Producto</class>
+    <class>modelo.ValeDevolucion</class>
+    <class>modelo.Transaccion</class>
+    <class>modelo.HistorialCliente</class>
+    <class>modelo.DetallePedido</class>
+    <class>modelo.Devolucion</class>
+    <class>modelo.Reporte</class>
+    <class>modelo.Ticket</class>
+    <class>modelo.Trabajador</class>
+    <class>modelo.UbicacionPedido</class>
+    <properties>
+      <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://aws-0-us-east-2.pooler.supabase.com:6543/postgres?user=postgres.smagcfzfmkudwrsnkvsf&amp;password=MiChingon.com"/>
+      <property name="javax.persistence.jdbc.user" value="postgres"/>
+      <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
+      <property name="javax.persistence.jdbc.password" value="MiChingon.com"/>
+    </properties>
+  </persistence-unit>
+</persistence>
