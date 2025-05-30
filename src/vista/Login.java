@@ -208,7 +208,7 @@ private String usuarioElegido;
                 switch(dTrabajador.getRol()){
                     case "Almacenista": AbrirInterfazAlmacenista(rol); break;
                     case "Cajero": AbrirInterfazCajero(); break;
-                    case "Gerente":  AbrirInterfazGerente(); break;
+                    case "Gerente": AbrirInterfazAlmacenista(rol); break;
                     case "Recepcionista": {
                         try {
                             AbrirInterfazRecepcionista();
@@ -216,7 +216,6 @@ private String usuarioElegido;
                             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     } break;
-
                 }
             }
         }
