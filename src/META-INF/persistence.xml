@@ -18,10 +18,10 @@
     <class>modelo.Trabajador</class>
     <class>modelo.UbicacionPedido</class>
     <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://aws-0-us-east-2.pooler.supabase.com:6543/postgres?user=postgres.smagcfzfmkudwrsnkvsf&amp;password=MiChingon.com"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://aws-0-us-east-2.pooler.supabase.com:6543/postgres?user=postgres.smagcfzfmkudwrsnkvsf&amp;password=MiCHingon.com"/>
       <property name="javax.persistence.jdbc.user" value="postgres"/>
       <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
-      <property name="javax.persistence.jdbc.password" value="MiChingon.com"/>
+      <property name="javax.persistence.jdbc.password" value="MiCHingon.com"/>
     </properties>
   </persistence-unit>
 </persistence>
