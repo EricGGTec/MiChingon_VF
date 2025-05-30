@@ -5,6 +5,7 @@
 package vista;
 
 import control.AdnDatos;
+import control.DetallePedidoJpaController;
 import control.InventarioJpaController;
 import control.PedidoJpaController;
 import control.ProductoJpaController;
@@ -22,6 +23,7 @@ import javax.swing.JOptionPane;
 import modelo.DatosTablaInventario;
 import modelo.DatosTablaInventarioBS;
 import modelo.DatosTablaPedidoInv;
+import modelo.DetallePedido;
 import modelo.Inventario;
 import modelo.MTablaInventario;
 import modelo.MTablaInventarioBS;
@@ -38,6 +40,7 @@ public class InterfazInventario extends javax.swing.JDialog {
     private ProductoJpaController cProducto;
     private PedidoJpaController cPedido;
     private InventarioJpaController cInventario;
+    private DetallePedidoJpaController cDetallePedido;
     private AdnDatos adn;
     private ArrayList<Producto> datosProductos;
     private MTablaProducto modTabProducto;
@@ -60,6 +63,8 @@ public class InterfazInventario extends javax.swing.JDialog {
     private List<Pedido> pedidos_s;
     private List<Inventario> inventarios;
     private List<Inventario> inventarios_s;
+    private List<DetallePedido> detallePedidos;
+    private List<DetallePedido> detallePedidos_s;
     private boolean confirmacion;
     private int indice;
     
@@ -76,6 +81,8 @@ public class InterfazInventario extends javax.swing.JDialog {
         pedidos = cPedido.findPedidoEntities();
         cInventario = new InventarioJpaController(adn.getEnf());
         inventarios = cInventario.findInventarioEntities();
+        cDetallePedido = new DetallePedidoJpaController(adn.getEnf());
+        detallePedidos = cDetallePedido.findDetallePedidoEntities();
         datosProductos = new ArrayList<>();
         modTabProducto = new MTablaProducto(datosProductos);
         lproductos.setModel(modTabProducto);
@@ -1554,6 +1561,21 @@ public class InterfazInventario extends javax.swing.JDialog {
             int id_e = pe.getIdPedido();
             for(Pedido pd: pedidos)
                 if(pd.getIdPedido()==id_e){
+                    detallePedidos = cDetallePedido.findDetallePedidoEntities();
+                    for(DetallePedido dp: detallePedidos)
+                        if(dp.getIdPedido().getIdPedido()==pd.getIdPedido())
+                            detallePedidos_s.add(dp);
+                    inventarios = cInventario.findInventarioEntities();
+                    for(DetallePedido dp:detallePedidos_s)
+                        for(Inventario ivn: inventarios)
+                            if(dp.getIdProducto().getIdProducto()==ivn.getIdProducto().getIdProducto() && dp.getColor().equals(ivn.getColor())
+                                    && dp.getTalla()==Integer.parseInt(ivn.getTalla())){
+                                ivn.setCantidadActual(ivn.getCantidadActual()+dp.getCantidad().intValue());
+                                cInventario.edit(cInventario.findInventario(ivn.getIdInventario()));
+                                cDetallePedido.destroy(dp.getIdpedidoProducto());
+                                break;
+                            }
+                                
                     try {
                          cPedido.destroy(id_e);
                         break;
