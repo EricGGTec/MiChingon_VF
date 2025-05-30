@@ -11,6 +11,8 @@ import java.awt.Image;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -69,7 +71,7 @@ private String usuarioElegido;
        // Cerrar ventana login
        
     }
-    public void AbrirInterfazRecepcionista(){
+    public void AbrirInterfazRecepcionista() throws Exception{
        // Cerrar ventana login
         setVisible(false);
         new InterfazPed(null, true).setVisible(true); // o false si no quieres que sea modal
@@ -205,7 +207,14 @@ private String usuarioElegido;
                     case "Almacenista": AbrirInterfazAlmacenista(rol); break;
                     case "Cajero": AbrirInterfazCajero(); break;
                     case "Gerente":  AbrirInterfazGerente(); break;
-                    case "Recepcionista": AbrirInterfazRecepcionista(); break;
+                    case "Recepcionista": {
+                        try {
+                            AbrirInterfazRecepcionista();
+                        } catch (Exception ex) {
+                            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    } break;
+
                 }
             }
         }
