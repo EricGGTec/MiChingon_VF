@@ -880,7 +880,7 @@ public class InterfazCajero extends javax.swing.JDialog {
     }
 
     private void BotonIniciarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonIniciarVentaActionPerformed
-        // TODO add your handling code here:
+        detallePedidos = cDetallePedido.findDetallePedidoEntities();
         CardLayout cl = (CardLayout) (PanelBotones.getLayout());
         cl.show(PanelBotones, "PanelVenta"); // o "inicio"
         Habilitar();
