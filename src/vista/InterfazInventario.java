@@ -1598,25 +1598,34 @@ public class InterfazInventario extends javax.swing.JDialog {
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         try{
         Producto pe = modTabProducto.getProducto(lproductos.getSelectedRow());
+        int r=0;
+        inventarios = cInventario.findInventarioEntities();
+        for(Inventario p:inventarios)
+            if(p.getIdProducto().getIdProducto()==pe.getIdProducto())
+                r++;
+        if(!(r>0)){
         Confirmacion.setVisible(true);
         if(confirmacion){
             int id_e = pe.getIdProducto();
-            for(Producto pr: productos)
-                if(pr.getIdProducto()==id_e){
-                    try {
-                        cProducto.destroy(id_e);
-                        break;
-                    } catch (IllegalOrphanException ex) {
-                        Logger.getLogger("Hola");
-                    } catch (NonexistentEntityException ex) {
-                        Logger.getLogger("Hola 2");
-                    }
-                }
+            //for(Producto pr: productos)
+                //if(pr.getIdProducto()==id_e){
+                    //try {
+                        cProducto.destroy(cProducto.findProducto(id_e).getIdProducto());
+                      //  break;
+                    //} catch (IllegalOrphanException ex) {
+                      //  Logger.getLogger("Hola");
+                    //} catch (NonexistentEntityException ex) {
+                      //  Logger.getLogger("Hola 2");
+                    //}
+                //}
             productos = cProducto.findProductoEntities();
             productos_s = new ArrayList<>();
             for(Producto pr:productos)
                 productos_s.add(pr);
         }
+        }
+        else
+            JOptionPane.showMessageDialog(this,"Existe una referencia del producto en inventario, elimine primero en inventario");
         }catch(Exception e){
             JOptionPane.showMessageDialog(this,"Seleccione una fila de la tabla");
         }
@@ -1725,7 +1734,12 @@ public class InterfazInventario extends javax.swing.JDialog {
                     //for(Inventario pr: inventarios)
                         //if(pr.getIdProducto().getIdProducto()==pa.getIdProducto()){
                             pa.setCantidadActual(pa.getCantidadActual()+Integer.parseInt(txtStockAP.getText()));
-                            cInventario.edit(cInventario.findInventario(pa.getIdInventario()));
+                            try{
+                                cInventario.edit(cInventario.findInventario(pa.getIdInventario()));
+                            }
+                            catch(Exception e){
+                                cInventario.edit(cInventario.findInventario(pa.getIdInventario()));
+                            }
                             JOptionPane.showMessageDialog(this,"Stock aumentado");
                             AgregarStock.dispose();
                 }
@@ -1762,7 +1776,11 @@ public class InterfazInventario extends javax.swing.JDialog {
             Pedido pa= modTabPedido.getPedido(lpedidos.getSelectedRow());
             Date f = JCalendarF.getDate();
             pa.setFechaEntregaEstimada(f);
-            cPedido.edit(cPedido.findPedido(pa.getIdPedido()));
+            try{
+                cPedido.edit(cPedido.findPedido(pa.getIdPedido()));
+            }catch(Exception e){
+                cPedido.edit(cPedido.findPedido(pa.getIdPedido()));
+            }
             EditarPedido.dispose();
         }catch(Exception e){
             JOptionPane.showMessageDialog(this,"No se ha seleccionado Fecha");
@@ -1784,12 +1802,17 @@ public class InterfazInventario extends javax.swing.JDialog {
         try{
             BigDecimal num1=new BigDecimal(txtPrecioEP.getText());
             int re =num1.compareTo(new BigDecimal(0));
-        if(!(re<=0)){
+            if(!(re<=0)){
+                pa.setNombre(txtProductoEP.getText());
                 pa.setDescripcion(txtDescripcionEP.getText());
                 pa.setTalla(txtTallaEP.getText());
                 pa.setColor(txtColorEP.getText());
                 pa.setPrecio(num1);
-                cProducto.edit(cProducto.findProducto(pa.getIdProducto()));
+                try{
+                    cProducto.edit(cProducto.findProducto(pa.getIdProducto()));
+                }catch(Exception e){
+                    cProducto.edit(cProducto.findProducto(pa.getIdProducto()));
+                }
                 EditarProducto.dispose();
             }
         else
